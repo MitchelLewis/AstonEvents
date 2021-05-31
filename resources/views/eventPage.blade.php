@@ -23,39 +23,51 @@
     </head>
     <body class="container shadow">
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-<div class="container">
-    <a class="navbar-brand" href="#">AstonEvents</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample07" aria-controls="navbarsExample07" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-    </button>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">AstonEvents</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
 
-    <div class="collapse navbar-collapse" id="navbarsExample07">
-    <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-        <a class="nav-link" href="/">Home</a>
-        </li>
-    </ul>
-    </div>
-</div>
-</nav>
+            <div class="collapse navbar-collapse" id="navbar">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                <a class="nav-link" href="/">Home</a>
+                </li>
+            </ul>
+            </div>
 
-<div class="mt-3">
-    <h1 class="text-center">{{$eventName}}</h1>
+            <a class="mr-sm-2 btn btn-primary text-white" href="/register">Register</a>
+            <a class="mr-sm-2 btn btn-secondary text-white">Log in</a>
+            </form>
+        </div>
+        </nav>
 
-    <h2 class="ml-3 mt-3 mb-3">Event description</h2>
-    <p class="ml-3 mt-3 mb-3">{{$eventDescription}}</p>
+        <div class="mt-3">
+            <h1 class="text-center">{{$eventName}}</h1>
 
-    <h2 class="ml-3 mt-3 mb-3">Event date/time</h2>
-    <p class="ml-3 mt-3 mb-3">{{date("F jS, Y", strtotime($dateTimeOfEvent)) }}</p>
-    
-    <h2 class="ml-3 mt-3 mb-3">Category</h2>
-    <p class="ml-3 mt-3 mb-3">{{$eventCategory}}</p>
+            <h2 class="ml-3 mt-3 mb-3">Event description</h2>
+            <p class="ml-3 mt-3 mb-3">{{$eventDescription}}</p>
 
-    <h2 class="ml-3 mt-3 mb-3">Location</h2>
-    <p class="ml-3 mt-3 mb-3">{{$location}}</p>
+            <h2 class="ml-3 mt-3 mb-3">Event date/time</h2>
+            <p class="ml-3 mt-3 mb-3">{{date("F jS, Y", strtotime($dateTimeOfEvent)) }}</p>
+            
+            <h2 class="ml-3 mt-3 mb-3">Category</h2>
+            <p class="ml-3 mt-3 mb-3">{{$eventCategory}}</p>
 
-    <h2 class="ml-3 mt-3 mb-3">People interested</h2>
-    <p class="ml-3 mt-3 mb-3">{{$interestRanking}}</p>
+            <h2 class="ml-3 mt-3 mb-3">Location</h2>
+            <p class="ml-3 mt-3 mb-3">{{$location}}</p>
+
+            <h2 class="ml-3 mt-3 mb-3">People interested</h2>
+            <p class="ml-3 mt-3 mb-3">{{$interestRanking}}</p>
+
+            <form method="post" action="/events/{{$id}}">
+                @csrf
+
+                <input type="submit" name="interested_btn" value="Interested" class="ml-3 mb-3 btn btn-success btn-sm text-white" />
+                <input type="submit" name="interested_btn" value="Not interested" class="ml-3 mb-3 btn btn-danger btn-sm text-white" />
+            </form>
+        </div>
 </body>
 </html

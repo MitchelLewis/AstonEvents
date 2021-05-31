@@ -23,65 +23,40 @@
     </head>
     <body class="container shadow">
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container">
-        <a class="navbar-brand" href="#">AstonEvents</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-        </button>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">AstonEvents</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
 
-        <div class="collapse navbar-collapse" id="navbar">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-            <a class="nav-link" href="/">Home</a>
-            </li>
-        </ul>
+            <div class="collapse navbar-collapse" id="navbar">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                <a class="nav-link" href="/">Home</a>
+                </li>
+            </ul>
+            </div>
+
+            <a class="mr-sm-2 btn btn-primary text-white">Register</a>
+            <a class="mr-sm-2 btn btn-secondary text-white">Log in</a>
+            </form>
         </div>
-
-        <a class="mr-sm-2 btn btn-primary text-white" href="/register">Register</a>
-        <a class="mr-sm-2 btn btn-secondary text-white">Log in</a>
-        </form>
-    </div>
-    </nav>
+        </nav>
 
         <div class="mt-3">
-            <h1 class="text-center">Welcome to Aston Events</h1>
+            <h1 class="text-center">Register to become an Organiser!</h1>
 
-            <form method="POST" action="/" class="border">
-                @csrf
+            <form class="mt-5">
+                <label for="name" class="mr-4 ml-3">Name:</label>
+                <input class="form-control" type="text" id="name" name="name">
 
-                <label for="rank" class="ml-3 mt-2">Ranking</label>
-                <select id="rank" name="rank" class="ml-3 mt-2">
-                    <option value="">------------</option>
-                    <option value="1">Most popular</option>
-                    <option value="-1">Least popular</option>
-                </select>
-                <br/>
-                <label for="category" class="ml-3 mt-2">Category</label>
-                <select id="category" name="category" class="mt-2 ml-3">
-                    <option value="">-----</option>
-                    <option value="sport">Sport</option>
-                    <option value="culture">Culture</option>
-                    <option value="other">Other</option>
-                </select>
+                <label for="email" class="mr-4 ml-3">Email address:</label>
+                <input class="form-control" type="email" id="email" name="email">
 
-                <br/>
-                <button type="submit" class="ml-3 mt-2 mb-3">
-                    Filter
-                </button>
+                <label for="number" class="mr-4 ml-3">Phone number:</label>
+                <input class="form-control" type="tel" id="number" name="number">
             </form>
-            <h2 class="ml-3 mt-3 mb-3">Events:</h2>
-
-            @foreach($events as $event)
-            <div class="mt-3 mb-3 shadow border">
-                <div class="ml-3 mt-3 mb-3">
-                    <h3> {{$event->eventName}} </h3>
-                    <p> {{$event->eventDescription }} </p>
-                    <p> {{date("F jS, Y", strtotime($event->dateTimeOfEvent)) }} </p>
-                    <a class="btn btn-primary" href="{{url('events')}}/{{$event->id}}">Details</a>
-                </div>
-            </div>
-            @endforeach
         </div>
-    </body>
-</html>
+</body>
+</html

@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\EventsController;
+use App\Http\Controllers\RegistrationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +18,9 @@ use App\Http\Controllers\EventsController;
 */
 
 Route::get('/', [IndexController::class, 'onPageLoad']);
-Route::post('/', [IndexController::class, 'onPageSubmit']);
+Route::post('/', [IndexController::class, 'onSubmit']);
 
 Route::get('/events/{id}', [EventsController::class, 'onPageLoad']);
+Route::post('/events/{id}', [EventsController::class, 'onSubmit']);
+
+Route::get('/register', [RegistrationController::class, 'onPageLoad']);
