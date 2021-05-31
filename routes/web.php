@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\IndexController;
+use App\Http\Controllers\EventsController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [IndexController::class, 'onPageLoad']);
+Route::post('/', [IndexController::class, 'onPageSubmit']);
+
+Route::get('/events/{id}', [EventsController::class, 'onPageLoad']);
