@@ -16,7 +16,13 @@ use App\Http\Controllers\EventsController;
 |
 */
 
-Route::get('/', [IndexController::class, 'onPageLoad']);
-Route::post('/', [IndexController::class, 'onPageSubmit']);
+Route::get('/', [IndexController::class, 'onPageLoad'])->name('home');
+Route::post('/', [IndexController::class, 'onSubmit']);
 
 Route::get('/events/{id}', [EventsController::class, 'onPageLoad']);
+Route::post('/events/{id}', [EventsController::class, 'onSubmit']);
+
+Auth::routes();
+
+Route::get('organise-event', [App\Http\Controllers\CreateEventController::class, 'onPageLoad']);
+Route::post('organise-event', [App\Http\Controllers\CreateEventController::class, 'onSubmit']);

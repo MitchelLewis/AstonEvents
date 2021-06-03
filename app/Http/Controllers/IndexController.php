@@ -12,7 +12,7 @@ class IndexController extends Controller
         return view('index', array('events' => Event::all()));
     }
 
-    public function onPageSubmit(Request $request) {
+    public function onSubmit(Request $request) {
         $rank = htmlspecialchars($request->input('rank'));
         $category = htmlspecialchars($request->input('category'));
         if($rank == "1") {
