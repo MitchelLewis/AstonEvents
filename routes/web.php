@@ -4,7 +4,6 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\EventsController;
-use App\Http\Controllers\RegistrationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,10 +16,13 @@ use App\Http\Controllers\RegistrationController;
 |
 */
 
-Route::get('/', [IndexController::class, 'onPageLoad']);
+Route::get('/', [IndexController::class, 'onPageLoad'])->name('home');
 Route::post('/', [IndexController::class, 'onSubmit']);
 
 Route::get('/events/{id}', [EventsController::class, 'onPageLoad']);
 Route::post('/events/{id}', [EventsController::class, 'onSubmit']);
 
-Route::get('/register', [RegistrationController::class, 'onPageLoad']);
+Auth::routes();
+
+Route::get('organise-event', [App\Http\Controllers\CreateEventController::class, 'onPageLoad']);
+Route::post('organise-event', [App\Http\Controllers\CreateEventController::class, 'onSubmit']);
