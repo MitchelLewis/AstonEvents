@@ -28,11 +28,17 @@ Auth::routes();
 Route::get('organise-event', [App\Http\Controllers\CreateEventController::class, 'onPageLoad']);
 Route::post('organise-event', [App\Http\Controllers\CreateEventController::class, 'onSubmit']);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 15e65ff (Added pictures, listing and editing own events)
 
 Route::get('my-events', [App\Http\Controllers\EventsController::class, 'onPageLoadForMyEvents']);
 
 Route::get('edit-event/{id}', [ChangeEventController::class, 'onPageLoad']);
 Route::post('edit-event/{id}', [ChangeEventController::class, 'onSubmit']);
 
+<<<<<<< HEAD
 =======
 >>>>>>> 5f1b724 (Added interested/disinterested buttons as well as base reg page)
+=======
+>>>>>>> 15e65ff (Added pictures, listing and editing own events)
