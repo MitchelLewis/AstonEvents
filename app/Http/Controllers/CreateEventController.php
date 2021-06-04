@@ -18,18 +18,30 @@ class CreateEventController extends Controller
         return view('organiseEvent');
     }
 
+    public function endsWith($string, $endString)
+    {
+        $len = strlen($endString);
+        if ($len == 0) {
+            return true;
+        }
+        return (substr($string, -$len) === $endString);
+    }   
+
     public function onSubmit(Request $request) {
         $data = $request->input();
         $idOfUser = Auth::id();
-        return Event::create([
-            'eventName' => $data['name'],
-            'eventCategory' => $data['category'],
-            'location' => $data['location'],
-            'eventDescription' => $data['description'],
-            'dateTimeOfEvent' => $data['date'],
-            'eventOrganiserId' => $idOfUser,
-            'imgLocation' => '/',
-            'interestRanking' => '0'
-        ]);
+        if($this->endsWith($data['imageUrl'], '.jpg' ) || $this->endsWith($data['imageUrl'], '.png' )) {
+            Event::create([
+                'eventName' => $data['name'],
+                'eventCategory' => $data['category'],
+                'location' => $data['location'],
+                'eventDescription' => $data['description'],
+                'dateTimeOfEvent' => $data['date'],
+                'eventOrganiserId' => $idOfUser,
+                'imgLocation' => $data['imageUrl'],
+                'interestRanking' => '0'
+            ]);
+            return redirect('/');
+        }
     }
 }

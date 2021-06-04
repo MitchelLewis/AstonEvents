@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ChangeEventController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\IndexController;
@@ -26,3 +27,9 @@ Auth::routes();
 
 Route::get('organise-event', [App\Http\Controllers\CreateEventController::class, 'onPageLoad']);
 Route::post('organise-event', [App\Http\Controllers\CreateEventController::class, 'onSubmit']);
+
+Route::get('my-events', [App\Http\Controllers\EventsController::class, 'onPageLoadForMyEvents']);
+
+Route::get('edit-event/{id}', [ChangeEventController::class, 'onPageLoad']);
+Route::post('edit-event/{id}', [ChangeEventController::class, 'onSubmit']);
+
