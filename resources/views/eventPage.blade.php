@@ -5,6 +5,8 @@
         <div class="mt-3">
             <h1 class="text-center">{{$eventName}}</h1>
 
+            <img class="ml-3 mt-3 mb-3 float-right" src="{{$imgLocation}}" style="width:235px;height:200px;">
+
             <h2 class="ml-3 mt-3 mb-3">Event description</h2>
             <p class="ml-3 mt-3 mb-3">{{$eventDescription}}</p>
 

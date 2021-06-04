@@ -25,7 +25,7 @@
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container">
-        <a class="navbar-brand" href="#">AstonEvents</a>
+        <a class="navbar-brand" href="/">AstonEvents</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
         </button>
@@ -68,7 +68,10 @@
                             </li>
                             <li class="nav-item">
                                 <a id="create-event" class="btn btn-primary float-right" href="/organise-event">Create event</a>
+                            </li>
 
+                            <li class="nav-item ml-2">
+                                <a id="list-events" class="btn btn-primary float-right" href="/my-events">My events</a>
                             </li>
                         @endguest
         </ul>
