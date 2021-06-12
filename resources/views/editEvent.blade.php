@@ -12,7 +12,7 @@
             </div>
             @endif      
 
-            <form  method="POST" action="/edit-event/{{$event->id}}" class="mt-5 col-sm-6">
+            <form enctype="multipart/form-data" method="POST" action="/edit-event/{{$event->id}}" class="mt-5 col-sm-6">
                 @csrf
 
                 <label for="name" class="mr-4 mt-2">Event name:</label>
@@ -54,17 +54,17 @@
                 @enderror
 
                 
-                <label for="date" class="mr-4 mt-2">Location</label>
-                <input class="form-control @error('location') is-invalid @enderror" type="date" id="date" name="date" value="{{explode(' ', $event->dateTimeOfEvent)[0]}}" required>
-                @error('location')
+                <label for="date" class="mr-4 mt-2">Date</label>
+                <input class="form-control @error('date') is-invalid @enderror" type="date" id="date" name="date" value="{{explode(' ', $event->dateTimeOfEvent)[0]}}" required>
+                @error('date')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                 @enderror
 
-                <label for="imageUrl" class="mr-4 mt-2">Image URL</label>
-                <input class="form-control @error('imageUrl') is-invalid @enderror" type="text" id="imageUrl" name="imageUrl" value="{{$event->imgLocation}}" required>
-                @error('imageUrl')
+                <label for="image" class="mr-4 mt-2">Image</label>
+                <input class="form-control @error('image') is-invalid @enderror" type="file" id="image" name="image" required>
+                @error('image')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

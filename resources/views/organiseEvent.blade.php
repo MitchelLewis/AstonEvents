@@ -12,7 +12,7 @@
             </div>
             @endif      
 
-            <form  method="POST" action="/organise-event" class="mt-5 col-sm-6">
+            <form  enctype="multipart/form-data" method="POST" action="/organise-event" class="mt-5 col-sm-6">
                 @csrf
 
                 <label for="name" class="mr-4 mt-2">Event name:</label>
@@ -60,13 +60,21 @@
                                     </span>
                 @enderror
 
-                <label for="imageUrl" class="mr-4 mt-2">Image URL</label>
-                <input class="form-control @error('imageUrl') is-invalid @enderror" type="text" id="imageUrl" name="imageUrl" required>
-                @error('imageUrl')
+                <label for="image" class="mr-4 mt-2">Image</label>
+                <input class="form-control @error('image') is-invalid @enderror" type="file" id="image" name="image" required>
+                @error('image')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                 @enderror
+
+                <label for="relatedContent" class="mr-4 mt-2">Related Content</label>
+                <select class="form-control @error('category') is-invalid @enderror" name="relatedContent" id="relatedContent" required>
+                    <option value="-1">None</option>
+                    @foreach($events as $event)
+                        <option value="{{$event->id}}">{{$event->eventName}}</option>
+                    @endforeach
+                </select>
 
             
                 <input class="mt-3 mb-5 btn btn-primary" type="submit" value="Create event">

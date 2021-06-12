@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\EventsController;
+use App\Http\Controllers\MyEventsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,16 +21,15 @@ use App\Http\Controllers\EventsController;
 Route::get('/', [IndexController::class, 'onPageLoad'])->name('home');
 Route::post('/', [IndexController::class, 'onSubmit']);
 
-Route::get('/events/{id}', [EventsController::class, 'onPageLoad']);
-Route::post('/events/{id}', [EventsController::class, 'onSubmit']);
+Route::get('events/{id}', [EventsController::class, 'onPageLoad']);
+Route::post('events/{id}', [EventsController::class, 'onSubmit']);
 
 Auth::routes();
 
 Route::get('organise-event', [App\Http\Controllers\CreateEventController::class, 'onPageLoad']);
 Route::post('organise-event', [App\Http\Controllers\CreateEventController::class, 'onSubmit']);
 
-Route::get('my-events', [App\Http\Controllers\EventsController::class, 'onPageLoadForMyEvents']);
+Route::get('my-events', [MyEventsController::class, 'onPageLoad']);
 
 Route::get('edit-event/{id}', [ChangeEventController::class, 'onPageLoad']);
 Route::post('edit-event/{id}', [ChangeEventController::class, 'onSubmit']);
-
