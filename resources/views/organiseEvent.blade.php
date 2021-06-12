@@ -12,11 +12,11 @@
             </div>
             @endif      
 
-            <form  method="POST" action="/organise-event" class="mt-5 col-sm-6">
+            <form  enctype="multipart/form-data" method="POST" action="/organise-event" class="mt-5 col-sm-6">
                 @csrf
 
                 <label for="name" class="mr-4 mt-2">Event name:</label>
-                <input class="form-control @error('name') is-invalid @enderror" type="text" id="name" name="name" required>
+                <input class="form-control @error('name') is-invalid @enderror" type="text" id="name" name="name">
                 @error('name')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -24,7 +24,7 @@
                 @enderror
 
                 <label for="description" class="mr-4 mt-2">Event description:</label>
-                <textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description" rows="4" cols="50" required></textarea>
+                <textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description" rows="4" cols="50"></textarea>
                 @error('description')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -32,7 +32,7 @@
                 @enderror
 
                 <label for="category" class="mr-4 mt-2">Category</label>
-                <select  class="form-control @error('category') is-invalid @enderror" name="category" id="category" required>
+                <select  class="form-control @error('category') is-invalid @enderror" name="category" id="category">
                     <option value="Sport">Sport</option>
                     <option value="Culture">Culture</option>
                     <option value="Other">Other</option>
@@ -44,7 +44,7 @@
                 @enderror
 
                 <label for="location" class="mr-4 mt-2">Location</label>
-                <input class="form-control @error('location') is-invalid @enderror" type="text" id="location" name="location" required>
+                <input class="form-control @error('location') is-invalid @enderror" type="text" id="location" name="location">
                 @error('location')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -53,20 +53,28 @@
 
                 
                 <label for="date" class="mr-4 mt-2">Date of event</label>
-                <input class="form-control @error('location') is-invalid @enderror" type="date" id="date" name="date" required>
+                <input class="form-control @error('location') is-invalid @enderror" type="date" id="date" name="date">
                 @error('location')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                 @enderror
 
-                <label for="imageUrl" class="mr-4 mt-2">Image URL</label>
-                <input class="form-control @error('imageUrl') is-invalid @enderror" type="text" id="imageUrl" name="imageUrl" required>
-                @error('imageUrl')
+                <label for="image" class="mr-4 mt-2">Image</label>
+                <input class="form-control @error('image') is-invalid @enderror" type="file" id="image" name="image">
+                @error('image')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                 @enderror
+
+                <label for="relatedContent" class="mr-4 mt-2">Related Content</label>
+                <select class="form-control @error('category') is-invalid @enderror" name="relatedContent" id="relatedContent">
+                    <option value="-1">None</option>
+                    @foreach($events as $event)
+                        <option value="{{$event->id}}">{{$event->eventName}}</option>
+                    @endforeach
+                </select>
 
             
                 <input class="mt-3 mb-5 btn btn-primary" type="submit" value="Create event">
