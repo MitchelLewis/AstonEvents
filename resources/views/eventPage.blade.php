@@ -22,6 +22,11 @@
             <h2 class="ml-3 mt-3 mb-3">People interested</h2>
             <p class="ml-3 mt-3 mb-3">{{$event->interestRanking}}</p>
 
+            @if($organiser != null)
+                <h2 class="ml-3 mt-3 mb-3">Organiser</h2>
+                <p class="ml-3 mt-3 mb-3">{{$organiser->name}}
+            @endif
+
             @if($relatedEvent != null)
                 <h2 class="ml-3 mt-3 mb-3">Related Content</h2>
                 <a class="ml-3 mt-3" href="/events/{{$relatedEvent->id}}">{{$relatedEvent->eventName}}</a>
