@@ -45,6 +45,39 @@ return [
             'auth_mode' => null,
         ],
 
+        'mailjet' => [
+            'key' => env('MAILJET_APIKEY'),
+            'secret' => env('MAILJET_APISECRET'),
+            'transactional' => [
+                'call' => true,
+                'options' => [
+                    'url' => 'api.mailjet.com',
+                    'version' => 'v3.1',
+                    'call' => true,
+                    'secured' => true
+                ]
+            ],
+            'common' => [
+                'call' => true,
+                'options' => [
+                    'url' => 'api.mailjet.com',
+                    'version' => 'v3',
+                    'call' => true,
+                    'secured' => true
+                ]
+            ],
+            'v4' => [
+                'call' => true,
+                'options' => [
+                    'url' => 'api.mailjet.com',
+                    'version' => 'v4',
+                    'call' => true,
+                    'secured' => true
+                ]
+            ],
+        ],
+        
+
         'ses' => [
             'transport' => 'ses',
         ],
@@ -84,8 +117,8 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
-        'name' => env('MAIL_FROM_NAME', 'Example'),
+        'address' => env('MAIL_FROM_ADDRESS', 'noreply@astonevents.com'),
+        'name' => env('MAIL_FROM_NAME', 'Aston Events'),
     ],
 
     /*
@@ -104,6 +137,14 @@ return [
 
         'paths' => [
             resource_path('views/vendor/mail'),
+        ],
+    ],
+
+    'stream' => [
+        'ssl' => [
+            'allow_self_signed' => false,
+            'verify_peer' => false,
+            'verify_peer_name' => false,
         ],
     ],
 
