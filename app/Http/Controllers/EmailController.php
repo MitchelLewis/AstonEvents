@@ -14,7 +14,6 @@ class EmailController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth');
         $this->mailer = new EmailSender();
     }
 
@@ -27,9 +26,6 @@ class EmailController extends Controller
     }
 
     public function onPageLoad(String $recipientId) {
-        if($recipientId == Auth::id()) {
-            return redirect('/');
-        }
         $recipientUser = User::find(htmlspecialchars($recipientId));
         return view('sendEmail', ["user" => $recipientUser]);
     }
@@ -43,14 +39,9 @@ class EmailController extends Controller
         if($validationResult->fails()) {
             return redirect('send-mail/'. $data["recipientId"])->withErrors($validationResult);
         } else {
-            $thisUser = User::find(Auth::id());
             $recipientUser = User::find(htmlspecialchars($data["recipientId"]));
-            if($thisUser == null) {
-                return redirect('send-mail/');
-            } else {
-                $this->mailer->sendMail($thisUser->name, $recipientUser->email, htmlspecialchars($data["msg"]));
-                return redirect('/');
-            }
+            $this->mailer->sendMail($recipientUser->email, htmlspecialchars($data["msg"]));
+            return redirect('/');
         }
     }
 
