@@ -30,7 +30,7 @@ class CreateEventController extends Controller
         return (substr($string, -$len) === $endString);
     }   
 
-    protected function validator(Request $request)
+    protected function validator(Request $request, array $messages)
     {
         return Validator::make($request->all(), [
             'name' => ['required', 'string', 'max:255'],
@@ -38,26 +38,23 @@ class CreateEventController extends Controller
             'location' => ['required', 'string'],
             'description' => ['required', 'string'],
             'date' => ['required', 'date'],
-            'image' => ['required', 'image', 'file']
-        ]);
+            'images' => ['required'],
+            'images.*' => ['required', 'image', 'file']
+        ], $messages);
     }
 
     public function onSubmit(Request $request) {
         $data = $request->input();
         $idOfUser = Auth::id();
-        $validationResult = $this->validator($request);
+        $customMessages = [
+            'image' => 'All image files must be an image e.g. .png, .jpg.'
+        ];
+        $validationResult = $this->validator($request, $customMessages);
         if($validationResult->fails()) {
             return redirect()->action([CreateEventController::class, 'onPageLoad'])->withErrors($validationResult);
         } else {
-            if($request->file('image')) {
-                $file = $request->file('image');
-                $filename = time().'_'.$file->getClientOriginalName();
-       
-                // File upload location
-                $location = 'files';
-       
-                // Upload file
-                $file->move($location,$filename);
+            if($request->file('images')) {
+                $files = $request->file('images');
 
                 $event = Event::create([
                     'eventName' => htmlspecialchars($data['name']),
@@ -69,11 +66,19 @@ class CreateEventController extends Controller
                     'relatedContent' => htmlspecialchars($data['relatedContent']),
                     'interestRanking' => '0'
                 ]);
-
-                Image::create([
-                    'filename' => $filename,
-                    'event_id' => $event->id
-                ]);
+                foreach($files as $file) {
+                    $filename = time().'_'.$file->getClientOriginalName();
+   
+                    // File upload location
+                    $location = 'files';
+           
+                    // Upload file
+                    $file->move($location,$filename);   
+                    Image::create([
+                        'filename' => $filename,
+                        'event_id' => $event->id
+                    ]);                 
+                }
                 return redirect('/');
             }
         }

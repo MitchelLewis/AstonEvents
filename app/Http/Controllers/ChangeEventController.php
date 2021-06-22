@@ -22,6 +22,10 @@ class ChangeEventController extends Controller
         ->where('eventOrganiserId', Auth::id())
         ->where('id', htmlspecialchars($id))
         ->get();
+        
+        if(empty($event->first())) {
+            return redirect()->route('home');
+        }
 
         return view('editEvent', array('event' => $event->first() ));
     }
@@ -35,7 +39,7 @@ class ChangeEventController extends Controller
         return (substr($string, -$len) === $endString);
     }   
 
-    protected function validator(Request $request)
+    protected function validator(Request $request, array $messages)
     {
         return Validator::make($request->all(), [
             'name' => ['required', 'string', 'max:255'],
@@ -43,8 +47,9 @@ class ChangeEventController extends Controller
             'location' => ['required', 'string'],
             'description' => ['required', 'string'],
             'date' => ['required', 'date'],
-            'image' => ['required', 'image', 'file']
-        ]);
+            'images' => ['required'],
+            'images.*' => ['required', 'image', 'file']
+        ], $messages);
     }
 
 
@@ -55,21 +60,17 @@ class ChangeEventController extends Controller
         ->where('id', htmlspecialchars($id))
         ->get();
         $data = $request->input();
-        $validationResult = $this->validator($request);
-        
+        $customMessages = [
+            'image' => 'All image files must be an image e.g. .png, .jpg.'
+        ];
+        $validationResult = $this->validator($request, $customMessages);        
         if($validationResult->fails()) {
             return redirect('edit-event/' . $id)->withErrors($validationResult);
         }
 
-        if($request->file('image')) {
-            $file = $request->file('image');
-            $filename = time().'_'.$file->getClientOriginalName();
-   
-            // File upload location
-            $location = 'files';
-   
-            // Upload file
-            $file->move($location,$filename);
+        if($request->file('images')) {
+            $files = $request->file('images');
+
 
             if($event->first() != null) {
                 $event = Event::find(htmlspecialchars($id));
@@ -79,14 +80,20 @@ class ChangeEventController extends Controller
                 $event -> eventDescription = htmlspecialchars($data['description']);
                 $event -> dateTimeOfEvent = htmlspecialchars($data['date']);
                 $event -> save();
-                Image::updateOrCreate(
-                    [
+                Image::where('event_id', $id)->delete();
+                foreach($files as $file) {
+                    $filename = time().'_'.$file->getClientOriginalName();
+   
+                    // File upload location
+                    $location = 'files';
+           
+                    // Upload file
+                    $file->move($location,$filename);   
+                    Image::create([
+                        'filename' => $filename,
                         'event_id' => $event->id
-                    ],
-                    [
-                    'filename' => $filename,
-                    'event_id' => $event->id
-                ]);
+                    ]);                 
+                }
                 return redirect('/');
             }
         }

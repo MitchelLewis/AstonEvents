@@ -20,15 +20,14 @@ class EventsController extends Controller
         if($relatedContentId != null && $relatedContentId != -1) {
             $relatedEvent = Event::findOrFail($relatedContentId);
         }
-        $eventImg = Image::select('filename')->where('event_id', $event->id)->get();
+        $eventImgs = Image::select('filename')->where('event_id', $event->id)->get()->toArray();
         $eventOrganiser = Organiser::select('name')->where('id', $event->eventOrganiserId)->get()->first();
-        if($eventImg->isEmpty()) {
-            $eventImg = "event_placeholder.jpg";
+        if(empty($eventImgs)) {
+            $eventImgs = ["event_placeholder.jpg"];
         } else {
-            $firstImg = $eventImg->first();
-            $eventImg = $firstImg->filename;
+            $eventImgs = array_column($eventImgs, 'filename');
         }
-        return view('eventPage', ['event' => $event, 'relatedEvent' => $relatedEvent, 'eventImg' => $eventImg, 'organiser' => $eventOrganiser]);
+        return view('eventPage', ['event' => $event, 'relatedEvent' => $relatedEvent, 'eventImgs' => $eventImgs, 'organiser' => $eventOrganiser]);
     }
 
     public function onSubmit(Request $request, String $id) {
