@@ -60,9 +60,9 @@
                                     </span>
                 @enderror
 
-                <label for="image" class="mr-4 mt-2">Image</label>
-                <input class="form-control @error('image') is-invalid @enderror" type="file" id="image" name="image" required>
-                @error('image')
+                <label for="images" class="mr-4 mt-2">Images</label>
+                <input class="form-control @error('images') is-invalid @enderror" type="file" id="images" name="images[]" required multiple>
+                @error('images')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

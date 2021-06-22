@@ -5,8 +5,11 @@
         <div class="mt-3">
             <h1 class="text-center">{{$event->eventName}}</h1>
 
-            <img class="ml-3 mt-3 mb-3 float-right" src="{{ asset('files/' . $eventImg) }}" style="width:235px;height:200px;">
-
+            <div class="col-md-offset-6">
+                @foreach($eventImgs as $eventImg)
+                    <img class="" src="{{ asset('files/' . $eventImg) }}" style="width:235px;height:200px;">
+                @endforeach
+            </div>
             <h2 class="ml-3 mt-3 mb-3">Event description</h2>
             <p class="ml-3 mt-3 mb-3">{{$event->eventDescription}}</p>
 
