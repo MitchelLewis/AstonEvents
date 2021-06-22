@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use App\Models\Image;
-use App\Models\Organiser;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -21,7 +21,7 @@ class EventsController extends Controller
             $relatedEvent = Event::findOrFail($relatedContentId);
         }
         $eventImgs = Image::select('filename')->where('event_id', $event->id)->get()->toArray();
-        $eventOrganiser = Organiser::select('name')->where('id', $event->eventOrganiserId)->get()->first();
+        $eventOrganiser = User::find($event->eventOrganiserId)->get()->first();
         if(empty($eventImgs)) {
             $eventImgs = ["event_placeholder.jpg"];
         } else {

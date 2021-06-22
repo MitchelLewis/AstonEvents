@@ -27,7 +27,8 @@
 
             @if($organiser != null)
                 <h2 class="ml-3 mt-3 mb-3">Organiser</h2>
-                <p class="ml-3 mt-3 mb-3">{{$organiser->name}}
+                <p class="ml-3 mt-3 mb-3">{{$organiser->name}}</p>
+                <a class="ml-3 btn btn-primary" href="/send-mail/{{$organiser->id}}">Send email</a>
             @endif
 
             @if($relatedEvent != null)
@@ -35,7 +36,8 @@
                 <a class="ml-3 mt-3" href="/events/{{$relatedEvent->id}}">{{$relatedEvent->eventName}}</a>
             @endif
 
-            <form method="post" action="/events/{{$event->id}}" class="mt-3">
+            <br/>
+            <form method="post" action="/events/{{$event->id}}" class="mt-5">
                 @csrf
 
                 <input type="submit" name="interested_btn" value="Interested" class="ml-3 mb-3 btn btn-success btn-sm text-white" />
