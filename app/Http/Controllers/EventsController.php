@@ -17,7 +17,7 @@ class EventsController extends Controller
         $event = Event::findOrFail($id);
         $relatedContentId = $event->relatedContent;
         $relatedEvent = null;
-        if($relatedContentId != null && $relatedContentId != -1) {
+        if($relatedContentId !== NULL) {
             $relatedEvent = Event::findOrFail($relatedContentId);
         }
         $eventImgs = Image::select('filename')->where('event_id', $event->id)->get()->toArray();
@@ -33,12 +33,12 @@ class EventsController extends Controller
     public function onSubmit(Request $request, String $id) {
         $answer = $request -> interested_btn;
         $model = Event::findOrFail(htmlspecialchars($id));
-        if($answer == "Interested" && !in_array($id, $request->session()->get('eventInterest', []))) {
+        if($answer === "Interested" && !in_array($id, $request->session()->get('eventInterest', []))) {
             DB::table('events')
             ->where('id', htmlspecialchars($id))
             ->increment('interestRanking', 1);
             $request->session()->push('eventInterest', $id);
-        } else if($answer == "Not interested" && ($model -> interestRanking - 1 >= 0) && !in_array($id, $request->session()->get('eventInterest', []))) {
+        } else if($answer === "Not interested" && ($model -> interestRanking - 1 >= 0) && !in_array($id, $request->session()->get('eventInterest', []))) {
             DB::table('events')
             ->where('id', htmlspecialchars($id))
             ->increment('interestRanking', -1);

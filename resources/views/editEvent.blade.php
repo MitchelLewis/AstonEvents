@@ -35,9 +35,9 @@
 
                 <label for="category" class="mr-4 mt-2">Category</label>
                 <select  class="form-control @error('category') is-invalid @enderror" name="category" id="category" required>
-                    <option value="Sport" @if($event -> eventCategory == 'Sport') selected @endif>Sport</option>
-                    <option value="Culture" @if($event -> eventCategory == 'Culture') selected @endif>Culture</option>
-                    <option value="Other" @if($event -> eventCategory == 'Other') selected @endif>Other</option>
+                    <option value="Sport" @if($event -> eventCategory === 'Sport') selected @endif>Sport</option>
+                    <option value="Culture" @if($event -> eventCategory === 'Culture') selected @endif>Culture</option>
+                    <option value="Other" @if($event -> eventCategory === 'Other') selected @endif>Other</option>
                 </select>
                 @error('category')
                                     <span class="invalid-feedback" role="alert">
@@ -69,6 +69,16 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                 @enderror
+
+                <label for="relatedContent" class="mr-4 mt-2">Related Content</label>
+                <select class="form-control @error('category') is-invalid @enderror" name="relatedContent" id="relatedContent" required>
+                    <option value="-1">None</option>
+                    @foreach($events as $otherEvent)
+                        @if($otherEvent->id !== $event->id)
+                            <option value="{{$otherEvent->id}}">{{$otherEvent->eventName}}</option>
+                        @endif
+                    @endforeach
+                </select>
 
             
                 <input class="mt-3 mb-5 btn btn-primary" type="submit" value="Save event">

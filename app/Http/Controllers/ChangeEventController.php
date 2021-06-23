@@ -27,17 +27,8 @@ class ChangeEventController extends Controller
             return redirect()->route('home');
         }
 
-        return view('editEvent', array('event' => $event->first() ));
+        return view('editEvent', ['event' => $event->first(), 'events' => Event::all()]);
     }
-
-    public function endsWith($string, $endString)
-    {
-        $len = strlen($endString);
-        if ($len == 0) {
-            return true;
-        }
-        return (substr($string, -$len) === $endString);
-    }   
 
     protected function validator(Request $request, array $messages)
     {
@@ -71,23 +62,24 @@ class ChangeEventController extends Controller
         if($request->file('images')) {
             $files = $request->file('images');
 
-
-            if($event->first() != null) {
+            if($event->first() !== null) {
                 $event = Event::find(htmlspecialchars($id));
                 $event -> eventName = htmlspecialchars($data['name']);
                 $event -> eventCategory = htmlspecialchars($data['category']);
                 $event -> location = htmlspecialchars($data['location']);
                 $event -> eventDescription = htmlspecialchars($data['description']);
                 $event -> dateTimeOfEvent = htmlspecialchars($data['date']);
+                if(htmlspecialchars($data['relatedContent']) !== "-1") {
+                    $event -> relatedContent = htmlspecialchars($data['relatedContent']);
+                } else {
+                    $event -> relatedContent = NULL;
+                }
+
                 $event -> save();
                 Image::where('event_id', $id)->delete();
                 foreach($files as $file) {
                     $filename = time().'_'.$file->getClientOriginalName();
-   
-                    // File upload location
                     $location = 'files';
-           
-                    // Upload file
                     $file->move($location,$filename);   
                     Image::create([
                         'filename' => $filename,
