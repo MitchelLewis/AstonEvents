@@ -22,50 +22,16 @@ class CreateEventsTable extends Migration
             ));
             $table->dateTime('dateTimeOfEvent');
             $table->string('eventDescription');
-            $table->integer('eventOrganiserId');
+            $table->bigInteger('eventOrganiserId')->unsigned();
             $table->string('location');
             $table->integer('interestRanking');
-            $table->integer('relatedContent')->nullable();
+            $table->integer('relatedContent')->nullable()->default(NULL);
+            
+            $table->foreign('eventOrganiserId')
+            ->references('id')
+            ->on('users')
+            ->onDelete('cascade');
         });
-
-        DB::table('events')->insert(
-            array(
-              'id' => 1,
-              'eventName' => 'Post Malone',
-              'eventCategory' => 'Other',
-              'dateTimeOfEvent' => "2038-01-19 03:14:07.999999",
-              'eventDescription' => 'A concert hosted by Post Malone',
-              'eventOrganiserId' => 12246,
-              'location' => 'Manchester',
-              'interestRanking' => 1
-            )
-        );  
-
-        DB::table('events')->insert(
-            array(
-              'id' => 2,
-              'eventName' => 'Gandhi',
-              'eventCategory' => 'Culture',
-              'dateTimeOfEvent' => "2020-01-19 03:14:07.999999",
-              'eventDescription' => 'A concert hosted by Gandhi',
-              'eventOrganiserId' => 12246,
-              'location' => 'Manchester',
-              'interestRanking' => 2
-            )
-        );
-
-        DB::table('events')->insert(
-            array(
-              'id' => 3,
-              'eventName' => 'Dave',
-              'eventCategory' => 'Other',
-              'dateTimeOfEvent' => "2020-01-19 03:14:07.999999",
-              'eventDescription' => 'A concert hosted by Dave',
-              'eventOrganiserId' => 12246,
-              'location' => 'Manchester',
-              'interestRanking' => 3
-            )
-        );
     }
 
     /**

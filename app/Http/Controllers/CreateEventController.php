@@ -55,17 +55,21 @@ class CreateEventController extends Controller
         } else {
             if($request->file('images')) {
                 $files = $request->file('images');
-
-                $event = Event::create([
+                $eventData = [
                     'eventName' => htmlspecialchars($data['name']),
                     'eventCategory' => htmlspecialchars($data['category']),
                     'location' => htmlspecialchars($data['location']),
                     'eventDescription' => htmlspecialchars($data['description']),
                     'dateTimeOfEvent' => htmlspecialchars($data['date']),
                     'eventOrganiserId' => htmlspecialchars($idOfUser),
-                    'relatedContent' => htmlspecialchars($data['relatedContent']),
                     'interestRanking' => '0'
-                ]);
+                ];
+
+                if(htmlspecialchars($data['relatedContent']) !== "-1") {
+                    $eventData['relatedContent'] =  htmlspecialchars($data['relatedContent']);
+                }
+
+                $event = Event::create($eventData);
                 foreach($files as $file) {
                     $filename = time().'_'.$file->getClientOriginalName();
    
