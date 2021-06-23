@@ -15,24 +15,24 @@ class IndexController extends Controller
     public function onSubmit(Request $request) {
         $rank = htmlspecialchars($request->input('rank'));
         $category = htmlspecialchars($request->input('category'));
-        if($rank == "1") {
+        if($rank === "1") {
             $order = "desc";
         } else {
             $order = "asc";
         }
     
-        if($rank != "" && $category != "") {
+        if($rank !== "" && $category !== "") {
             $events = DB::table('events')
             ->where('eventCategory', '=', $category)
             ->orderBy('interestRanking', $order)
             ->limit(25)
             ->get();
-        } else if ($rank != "" && $category == "") {
+        } else if ($rank !== "" && $category === "") {
             $events = DB::table('events')
             ->orderBy('interestRanking', $order)
             ->limit(25)
             ->get();
-        } else if ($rank == "" && $category != "") {
+        } else if ($rank === "" && $category !== "") {
             $events = DB::table('events')
             ->where('eventCategory', '=', $category)
             ->limit(25)

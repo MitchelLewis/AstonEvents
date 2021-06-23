@@ -18,17 +18,8 @@ class CreateEventController extends Controller
     }
 
     public function onPageLoad(Request $request) {
-        return view('organiseEvent', array('events' => Event::all()));
+        return view('organiseEvent', ['events' => Event::all()]);
     }
-
-    public function endsWith($string, $endString)
-    {
-        $len = strlen($endString);
-        if ($len == 0) {
-            return true;
-        }
-        return (substr($string, -$len) === $endString);
-    }   
 
     protected function validator(Request $request, array $messages)
     {
@@ -72,11 +63,7 @@ class CreateEventController extends Controller
                 $event = Event::create($eventData);
                 foreach($files as $file) {
                     $filename = time().'_'.$file->getClientOriginalName();
-   
-                    // File upload location
                     $location = 'files';
-           
-                    // Upload file
                     $file->move($location,$filename);   
                     Image::create([
                         'filename' => $filename,
