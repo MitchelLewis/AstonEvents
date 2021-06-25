@@ -12,10 +12,23 @@ use App\Models\Image;
 
 class ChangeEventController extends Controller
 {
+    
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
     public function __construct(){
         $this->middleware('auth');
     }
 
+    /**
+     * Shows the page for the given event, if the user logged in is not the 'owner' of the event, then
+     * they are redirected back to the home page.
+     *
+     * @param  Request $request 
+     * @param  String $id 
+     */
     public function onPageLoad(Request $request, String $id) {
         $event = DB::table('events')
         ->select()
@@ -30,6 +43,13 @@ class ChangeEventController extends Controller
         return view('editEvent', ['event' => $event->first(), 'events' => Event::all()]);
     }
 
+    /**
+     * Get a validator for an incoming request.
+     *
+     * @param  Request  $request
+     * @param  array  $messages
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
     protected function validator(Request $request, array $messages)
     {
         return Validator::make($request->all(), [
@@ -43,7 +63,15 @@ class ChangeEventController extends Controller
         ], $messages);
     }
 
-
+    /**
+     * POST handler for changing event. Similar to the creation of an event, changing requires the same fields
+     * to be present in the request params. Passing a custom message for when the file uploaded is not an image.
+     * For events that have images, these images are deleted and reuploaded and assigned.
+     * Redirects to /home on success.
+     *
+     * @param  Request $request 
+     * @param  String $id 
+     */
     public function onSubmit(Request $request, String $id) {
         $event = DB::table('events')
         ->select()

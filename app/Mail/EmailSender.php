@@ -23,6 +23,15 @@ class EmailSender extends Mailable
         //
     }
 
+    /**
+     * Handles sending mail with the specified recipient email and message to send.
+     * True on success, false on failure.
+     * 
+     * @param String $recipient - Recipient email
+     * @param String $msg - Message body for email
+     * @return boolean
+     * 
+     */
     public function sendMail(String $recipient, String $msg) {
         $mj = Mailjet::getClient();
         $body = [
