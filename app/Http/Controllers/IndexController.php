@@ -8,10 +8,21 @@ use Illuminate\Support\Facades\DB;
 
 class IndexController extends Controller
 {
-    public function onPageLoad(Request $request) {
+    /**
+     * Shows the index page with all events.
+     * 
+     * @param String $id - ID of the event
+     */
+    public function onPageLoad() {
         return view('index', array('events' => Event::all()));
     }
 
+    /**
+     * Handles the POST request for filtering the events by interest and/or category.
+     * Returns a the page with the filtered results.
+     * 
+     * @param Request $request
+     */
     public function onSubmit(Request $request) {
         $rank = htmlspecialchars($request->input('rank'));
         $category = htmlspecialchars($request->input('category'));
@@ -41,7 +52,6 @@ class IndexController extends Controller
             $events = Event::all();
         }
             
-
         return view('index', array('events' => $events));
     }
 }

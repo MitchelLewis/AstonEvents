@@ -41,7 +41,6 @@
                 @csrf
 
                 <input type="submit" name="interested_btn" value="Interested" class="ml-3 mb-3 btn btn-success btn-sm text-white" />
-                <input type="submit" name="interested_btn" value="Not interested" class="ml-3 mb-3 btn btn-danger btn-sm text-white" />
             </form>
         </div>
 @endsection

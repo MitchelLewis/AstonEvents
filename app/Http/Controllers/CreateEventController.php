@@ -13,14 +13,33 @@ use Illuminate\Support\Facades\Validator;
 
 class CreateEventController extends Controller
 {
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
     public function __construct(){
         $this->middleware('auth');
     }
 
+    /**
+     * Shows the create event page, passing in all events so that the user can select related content.
+     *
+     * @param  Request $request 
+     * @param  String $id 
+     */
     public function onPageLoad(Request $request) {
         return view('organiseEvent', ['events' => Event::all()]);
     }
 
+    /**
+     * Get a validator for an incoming request.
+     *
+     * @param  Request  $request
+     * @param  array  $messages
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
     protected function validator(Request $request, array $messages)
     {
         return Validator::make($request->all(), [
@@ -34,6 +53,12 @@ class CreateEventController extends Controller
         ], $messages);
     }
 
+    /**
+     * Handles the POST request for a new event. Same as changing event in terms of validation. If the validation fails, error fields are shown.
+     * Creates a new App\Models\Event and App\Models\Image. 
+     *
+     * @param  Request $request 
+     */
     public function onSubmit(Request $request) {
         $data = $request->input();
         $idOfUser = Auth::id();

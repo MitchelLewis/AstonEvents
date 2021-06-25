@@ -13,7 +13,13 @@ use Illuminate\Support\Facades\Auth;
 
 class EventsController extends Controller
 {
-    public function onPageLoad(Request $request, String $id) {
+    /**
+     * Shows the event page for a particular event found via the parameter $id. Finding the related event (if exists) as well as the image(s) assigned
+     * to the event.
+     * 
+     * @param String $id - ID of the event
+     */
+    public function onPageLoad(String $id) {
         $event = Event::findOrFail($id);
         $relatedContentId = $event->relatedContent;
         $relatedEvent = null;
@@ -30,21 +36,23 @@ class EventsController extends Controller
         return view('eventPage', ['event' => $event, 'relatedEvent' => $relatedEvent, 'eventImgs' => $eventImgs, 'organiser' => $eventOrganiser]);
     }
 
+    /**
+     * Handles the POST request of specifying interest in an event.
+     * If the user has already shown interest in this event (session key), then the count will not increment.
+     * If not, the count in the database is updated and the page is refreshed (adding the key to the session to prevent multiple increments).
+     * 
+     * @param Request $request
+     * @param String $id - ID of the event
+     */
     public function onSubmit(Request $request, String $id) {
         $answer = $request -> interested_btn;
-        $model = Event::findOrFail(htmlspecialchars($id));
         if($answer === "Interested" && !in_array($id, $request->session()->get('eventInterest', []))) {
             DB::table('events')
             ->where('id', htmlspecialchars($id))
             ->increment('interestRanking', 1);
             $request->session()->push('eventInterest', $id);
-        } else if($answer === "Not interested" && ($model -> interestRanking - 1 >= 0) && !in_array($id, $request->session()->get('eventInterest', []))) {
-            DB::table('events')
-            ->where('id', htmlspecialchars($id))
-            ->increment('interestRanking', -1);
-            $request->session()->push('eventInterest', $id);
         }
         
-        return $this->onPageLoad($request, $id);
+        return $this->onPageLoad($id);
     }
 }
