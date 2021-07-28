@@ -27,7 +27,7 @@ class EventsController extends Controller
             $relatedEvent = Event::findOrFail($relatedContentId);
         }
         $eventImgs = Image::select('filename')->where('event_id', $event->id)->get()->toArray();
-        $eventOrganiser = User::find($event->eventOrganiserId)->get()->first();
+        $eventOrganiser = User::findOrFail($event->eventOrganiserId);
         if(empty($eventImgs)) {
             $eventImgs = ["event_placeholder.jpg"];
         } else {
